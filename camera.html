@@ -1,0 +1,71 @@
+
+<!DOCTYPE HTML>
+<!--
+	Aerial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="en">
+	<head>
+		<title>GET PHOTO</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<div id="wrapper">
+			<div id="bg"></div>
+			<div id="overlay"></div>
+			<div id="main">
+<input type="button" title="open camera" value="open camera" name="open camera" onclick="getMedia()" />
+<video id="video" width="500px" height="500px" autoplay></video>
+<canvas id="canvas" width="500px" height="500px"></canvas>
+<button id="snap" onclick="takePhoto()">Take photo</button>
+			</div>
+
+				
+
+			
+			
+			  </div>
+				
+
+			
+		
+		<script>
+			window.onload = function() { document.body.classList.remove('is-preload'); }
+			window.ontouchmove = function() { return false; }
+			window.onorientationchange = function() { document.body.scrollTop = 0; }
+		</script>
+	<script>
+function getMedia() {
+let constraints = {
+video: {width: 500, height: 500},
+audio: true
+};
+//獲得video攝像頭區域
+let video = document.getElementById("video");
+//這里介紹新的方法，返回一個 Promise對象
+// 這個Promise對象返回成功后的回調函數帶一個 MediaStream 對象作為其參數
+// then()是Promise對象里的方法
+// then()方法是異步執行，當then()前的方法執行完后再執行then()內部的程序
+// 避免數據沒有獲取到
+let promise = navigator.mediaDevices.getUserMedia(constraints);
+promise.then(function (MediaStream) {
+video.srcObject = MediaStream;
+video.play();
+});
+}
+
+function takePhoto() {
+//獲得Canvas對象
+let video = document.getElementById("video");
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext('2d');
+ctx.drawImage(video, 0, 0, 500, 500);
+}
+</script>
+
+	</body>
+</html>
